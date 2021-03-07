@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-website-graph',
   templateUrl: './website-graph.component.html',
-  styleUrls: ['./website-graph.component.css']
+  styleUrls: ['./website-graph.component.scss']
 })
 export class WebsiteGraphComponent implements OnInit {
 
