@@ -20,6 +20,10 @@ export const Approutes: Routes = [
     ]
   },
   {
+    path: 'authentication',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
+  {
     path: '**',
     redirectTo: '/dashboard'
   }
