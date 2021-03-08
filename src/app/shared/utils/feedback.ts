@@ -1,4 +1,4 @@
 export const formsFeedback = {
-	required: 'Required',
-	pattern: 'invalid format',
+	required: 'Requerido',
+	pattern: 'Formato invalido',
 };
