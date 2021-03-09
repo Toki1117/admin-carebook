@@ -1,0 +1,13 @@
+<ng-container *ngIf="user.profilePicFilepath; else showIcon">
+  <img
+    style="width: 100%"
+    src="{{ user.profilePicFilepath }}"
+    alt="user-image"
+    class="rounded-circle"
+  />
+</ng-container>
+<ng-template #showIcon>
+  <span class="avatar-title bg-secondary rounded-circle">
+    {{ initials }}
+  </span>
+</ng-template>
