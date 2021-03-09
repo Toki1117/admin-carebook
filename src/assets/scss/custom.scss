@@ -1,1 +1,16 @@
 // In this scss you can overwrite all our scss, we suggested you to add your scss into this, so whenever the update comes it will not affect your code.
+
+// Forms
+input.ng-invalid.ng-touched {
+	border: red solid 1px !important;
+}
+
+.required {
+	content: '*';
+	color: red;
+}
+
+.feedback {
+	font-size: smaller;
+	margin-left: 1em;
+}
