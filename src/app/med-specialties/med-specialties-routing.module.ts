@@ -11,7 +11,10 @@ const routes: Routes = [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       {
         path: 'overview',
-        component: OverviewComponent
+        component: OverviewComponent,
+        data: {
+          title: 'Medical Specialties'
+        }
       }
     ]
   }
