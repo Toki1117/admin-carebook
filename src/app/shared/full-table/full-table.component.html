@@ -1,0 +1,414 @@
+<div class="row">
+  <div class="col-12">
+    <div [ngClass]="{ 'shadow-none': noShadow, card: !borderless }">
+      <div [ngClass]="{ 'card-body': !borderless }">
+        <form>
+          <div class="download-container px-1 py-1" *ngIf="downloadable">
+            <i
+              class="btn btn-primary-scheme uil-down-arrow px-1 py-0"
+              (click)="triggerDownload()"
+            ></i>
+          </div>
+          <div
+            class="d-flex"
+            [ngClass]="{
+              'flex-row-reverse flex-wrap-reverse': reverseHeader,
+              'flex-wrap': !reverseHeader
+            }"
+            *ngIf="showHeader"
+          >
+            <div
+              class="col-sm-12 col-md-4 d-flex"
+              [ngClass]="{
+                'flex-row-reverse': reverseHeader,
+                'align-items-end': headerTemplateRef
+              }"
+            >
+              <div *ngIf="showSearch" class="app-search">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    #search
+                    id="search"
+                    type="text"
+                    placeholder="Buscar"
+                    name="searchTerm"
+                    [(ngModel)]="service.searchTerm"
+                  />
+                  <span class="mdi mdi-magnify"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md-8 d-flex justify-content-end">
+              <ng-container
+                [ngTemplateOutlet]="headerTemplateRef"
+              ></ng-container>
+              <div class="d-flex mb-3">
+                <div *ngIf="showRowLimit" class="ml-2">
+                  <label class="d-inline mr-1">{{
+                    'Mostrar'
+                  }}</label>
+                  <select
+                    class="custom-select custom-select-sm w-auto ml-1 mr-1 d-inline"
+                    name="pageSize"
+                    [(ngModel)]="service.pageSize"
+                  >
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="20">20</option>
+                    <option [ngValue]="50">50</option>
+                  </select>
+                </div>
+                <div *ngIf="buttonText" class="ml-2">
+                  <button
+                    (click)="onHeaderButtonClick(buttonText)"
+                    class="btn {{
+                      buttonClass ? buttonClass : 'btn-primary-scheme'
+                    }} mb-0"
+                  >
+                    <i [class]="buttonIcon ? buttonIcon : 'no-icon'"></i>
+                    {{ buttonText }}
+                  </button>
+                </div>
+                <div
+                  class="d-flex flex-row-reverse"
+                  *ngIf="!!headerButtons && headerButtons.length >= 1"
+                >
+                  <ng-container *ngFor="let btn of headerButtons">
+                    <button
+                      (click)="onHeaderButtonClick(btn.text)"
+                      class="btn ml-2 mb-0"
+                      [ngClass]="btn.ngClass || 'btn-light'"
+                    >
+                      <i *ngIf="!!btn.icon" [class]="btn.icon"></i>
+                      {{ btn.text  }}
+                    </button>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <app-ui-preloader
+            [display]="service.loading$ | async"
+          ></app-ui-preloader>
+
+          <div class="table-responsive">
+            <table
+              class="table table-centered nowrap w-100"
+              id="products-datatable"
+              [ngStyle]="tableStyle ? tableStyle : {}"
+            >
+              <thead class="thead-light">
+                <tr>
+                  <ng-container *ngFor="let colu of columns; let idx = index">
+                    <th
+                      *ngIf="colu.notSortable; else sort"
+                      scope="col"
+                      [ngStyle]="colu.ngStyleHeader"
+                    >
+                      {{ colu.header}}
+                    </th>
+                    <ng-template #sort let-sorted>
+                      <th
+                        scope="col"
+                        [sortable]="colu.field"
+                        [ngStyle]="colu.ngStyleHeader"
+                        (sort)="onSort($event, colu.sortBy)"
+                      >
+                        <div class="table-header">
+                          {{ colu.header }}
+                          <i [class]="sortIcon(idx)"></i>
+                        </div>
+                      </th>
+                    </ng-template>
+                  </ng-container>
+
+                  <th scope="col" *ngIf="actionHeader != null">
+                    <span class="float-right mr-2">{{
+                      actionHeader
+                    }}</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let rowData of service.data$ | async; let i = index"
+                >
+                  <td *ngFor="let colu of columns; let i = index" scope="row">
+                    <div
+                      class="entry-container"
+                      [ngClass]="colu.ngClass"
+                      [ngStyle]="colu.ngStyle"
+                      *ngIf="
+                        !colu.isBadge &&
+                        !colu.isUser &&
+                        !colu.isEntryDropdown &&
+                        !colu.isRating
+                      "
+                    >
+                      <span
+                        class="entry"
+                        *ngIf="!colu.clickable && !colu.isHighlighted"
+                        (click)="onRowTableClick(colu.field, rowData)"
+                        [ngClass]="{ 'flex-row-reverse': colu.iconReverse }"
+                        [ngStyle]="
+                          colu.entryStyle
+                            ? rowData[colu.field].details['style']
+                              ? rowData[colu.field].details['style']
+                              : rowData[colu.field].details
+                            : ''
+                        "
+                      >
+                        <i
+                          [class]="
+                            !!colu.hasIcon
+                              ? (rowData[colu.field].details['icon']
+                                  ? rowData[colu.field].details['icon']
+                                  : rowData[colu.field].details) + ' mrl-1'
+                              : 'no-icon'
+                          "
+                        ></i>
+                        {{
+                          !!colu.hasIcon || !!colu.entryStyle
+                            ? rowData[colu.field].text
+                            : rowData[colu.field]
+                        }}
+                      </span>
+                      <b
+                        class="entry"
+                        [ngClass]="{ 'flex-row-reverse': colu.iconReverse }"
+                        *ngIf="!colu.clickable && colu.isHighlighted"
+                        (click)="onRowTableClick(colu.field, rowData)"
+                      >
+                        <i
+                          [class]="
+                            !!colu.hasIcon
+                              ? (rowData[colu.field].details['icon']
+                                  ? rowData[colu.field].details['icon']
+                                  : rowData[colu.field].details) + ' mrl-1'
+                              : 'no-icon'
+                          "
+                        >
+                        </i>
+                        {{
+                          !!colu.hasIcon || !!colu.entryStyle
+                            ? rowData[colu.field].text
+                            : rowData[colu.field]
+                        }}
+                      </b>
+                      <div
+                        (click)="onRowTableClick(colu.field, rowData)"
+                        *ngIf="colu.clickable"
+                        [ngStyle]="
+                          colu.entryStyle
+                            ? rowData[colu.field].details['style']
+                            : {}
+                        "
+                      >
+                        <a
+                          *ngIf="colu.isUrl"
+                          role="button"
+                          [href]="rowData[colu.field]"
+                          target="_blank"
+                          >{{ rowData[colu.field] }}</a
+                        >
+                        <a
+                          role="button"
+                          *ngIf="colu.isRoute"
+                          [routerLink]="rowData[colu.field].details.route"
+                        >
+                          {{ rowData[colu.field].text }}</a
+                        >
+                        <a role="button" *ngIf="!colu.isUrl && !colu.isRoute">
+                          {{ rowData[colu.field] }}</a
+                        >
+                      </div>
+                      <span class="p-1" *ngIf="i === 0 && rowData.description">
+                        <i
+                          class="mdi mdi-information-outline"
+                          placement="top"
+                          [ngbTooltip]="rowData.description"
+                        ></i>
+                      </span>
+                      <span
+                        class="p-1"
+                        *ngIf="colu.icon"
+                        (click)="onRowTableClick(colu.field, rowData)"
+                      >
+                        <i [ngClass]="colu.icon"></i>
+                      </span>
+                    </div>
+
+                    <!-- Should be a custom field in case other badge classes are needed and custom text for booleans as well -->
+                    <div
+                      (click)="onRowTableClick(colu.field, rowData)"
+                      [ngClass]="colu.ngClass"
+                      [ngStyle]="colu.ngStyle"
+                      *ngIf="colu.isBadge"
+                    >
+                      <span
+                        [ngClass]="{
+                          'flex-row-reverse': colu.iconReverse,
+                          'justify-content-center': !colu.hasIcon,
+                          'justify-content-between':
+                            colu.hasIcon && rowData[colu.field].text,
+                          'justify-content-center':
+                            colu.hasIcon && !rowData[colu.field].text
+                        }"
+                        class="p-1 d-inline-flex align-items-center badge {{
+                          rowData[colu.field].details.badgeClass
+                        }}"
+                      >
+                        <i
+                          class="{{
+                            rowData[colu.field].details.icon || 'no-icon'
+                          }}"
+                        ></i>
+                        {{ rowData[colu.field].text }}
+                      </span>
+                    </div>
+
+                    <div
+                      [ngClass]="colu.ngClass"
+                      [ngStyle]="colu.ngStyle"
+                      *ngIf="colu.isUser"
+                      class="user"
+                    >
+                      <div class="table-avatar mr-2">
+                        <!-- <app-avatar-image
+                          [user]="rowData[colu.field].details"
+                        ></app-avatar-image> -->
+                      </div>
+                      <a
+                        (click)="onRowTableClick(colu.field, rowData)"
+                        role="button"
+                        *ngIf="colu.clickable; else noClickable"
+                      >
+                        {{ rowData[colu.field].text }}</a
+                      >
+                      <ng-template #noClickable>
+                        <span>{{ rowData[colu.field].text }}</span>
+                      </ng-template>
+                    </div>
+                    <div
+                      style="cursor: pointer"
+                      class="dropdown"
+                      ngbDropdown
+                      placement="bottom-right"
+                      container="body"
+                      *ngIf="colu.isEntryDropdown"
+                    >
+                      <span
+                        class="dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        ngbDropdownToggle
+                      >
+                        {{ rowData[colu.field].text }}
+                        <i class="uil-angle-down"> </i>
+                      </span>
+                      <div class="dropdown-menu" ngbDropdownMenu>
+                        <ng-container
+                          *ngFor="let opt of rowData[colu.field].details"
+                        >
+                          <!-- Use ITableAction to create options -->
+                          <a
+                            class="dropdown-item"
+                            ngbDropdownItem
+                            (click)="onActionClick(opt, rowData)"
+                          >
+                            {{ opt.label || opt }}
+                          </a>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div *ngIf="colu.isRating">
+                      <app-rating
+                        [ratingValue]="rowData[colu.field].details['value']"
+                      ></app-rating>
+                    </div>
+                  </td>
+
+                  <td *ngIf="!!actions && actions.length >= 1">
+                    <div
+                      style="cursor: pointer"
+                      class="dropdown"
+                      ngbDropdown
+                      placement="bottom-right"
+                      container="body"
+                      *ngIf="
+                        !conditionalField ||
+                        (conditionalField &&
+                          rowData[conditionalField['fieldActionCondition']]
+                            .details['condition'])
+                      "
+                    >
+                      <span
+                        class="dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        ngbDropdownToggle
+                      >
+                        <i class="mdi mdi-dots-vertical"> </i>
+                      </span>
+                      <div class="dropdown-menu" ngbDropdownMenu>
+                        <ng-container *ngFor="let act of actions">
+                          <a
+                            class="dropdown-item"
+                            ngbDropdownItem
+                            (click)="onActionClick(act, rowData)"
+                          >
+                            <i *ngIf="act.icon" [ngClass]="act.icon"></i>
+                            {{ act.label }}
+                          </a>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div
+            class="d-flex flex-row justify-content-between align-items-center flex-wrap mt-2"
+            *ngIf="pagination"
+          >
+            <div class="flex-column ml-2">
+              <div
+                class="mb-2"
+                id="table_info"
+                role="status"
+                aria-live="polite"
+              >
+                Showing {{ service.startIndex + 1 }} to
+                {{ service.endIndex }} of
+                {{ service.totalRecords }}
+                entries
+              </div>
+            </div>
+            <!-- Pagination -->
+            <div class="flex-column" *ngIf="pagination">
+              <div class="pagination-rounded">
+                <ngb-pagination
+                  [collectionSize]="service.collectionSize"
+                  [(page)]="service.page"
+                  [(pageSize)]="service.pageSize"
+                  [maxSize]="3"
+                  [ellipses]="true"
+                  [boundaryLinks]="true"
+                >
+                </ngb-pagination>
+              </div>
+            </div>
+            <!-- End Pagination -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
