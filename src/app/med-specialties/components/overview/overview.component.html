@@ -2,6 +2,18 @@
 <app-full-table
 	actionHeader=""
 	[columns]="columns"
+	[actions]="actions"
+	[headerButtons]="buttons"
 	[data]="data$ | async"
-    
+	(actionCallback)="onTableEventHandler($event)"
+	(buttonCallback)="onTableEventHandler($event)"
 ></app-full-table>
+<i class="mdi mdi-alert-circle-outline"></i>
+<app-sidebar-dl
+	[isShowing]="showSidebar"
+	[title]=""
+	[size]="'xLarge'"
+	(onHide)="onSidebarHide()"
+>
+sdnjdkwnjkwefn
+</app-sidebar-dl>
