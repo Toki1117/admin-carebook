@@ -32,15 +32,5 @@ export const API_URL = {
 		update: (id: string) =>
 			`${baseUrl}/archive_types/update/${id}`,
         main: `${baseUrl}/archive_types`,
-    },
-    personalBackRecType: {
-        byId: (id: string) => `${baseUrl}/personal_background_type/${id}`,
-        create: `${baseUrl}/personal_background_type/create`,
-		delete: (id: string) =>
-			`${baseUrl}/personal_background_type/delete/${id}`,
-		update: (id: string) =>
-			`${baseUrl}/personal_background_type/update/${id}`,
-        main: `${baseUrl}/personal_background_type`,
-    },
-
+    }
 }
