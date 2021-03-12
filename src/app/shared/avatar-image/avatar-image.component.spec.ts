@@ -17,7 +17,7 @@ describe('AvatarImageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AvatarImageComponent);
     component = fixture.componentInstance;
-    component.user = {
+    component.item = {
       profilePicFilepath: '',
       lastName: 'Doe',
       firstName: 'John',

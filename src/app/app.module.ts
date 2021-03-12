@@ -28,6 +28,7 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { CoreModule } from './core/core.module';
 import { ToastModule } from './shared/toast/toast/toast.module';
+import { AvatarImageModule } from './shared/avatar-image/avatar-image.module';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true,
@@ -55,6 +56,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		NgbModule,
 		CoreModule,
 		ToastModule,
+		AvatarImageModule,
 		RouterModule.forRoot(Approutes, {
 			useHash: false,
 			relativeLinkResolution: 'legacy',

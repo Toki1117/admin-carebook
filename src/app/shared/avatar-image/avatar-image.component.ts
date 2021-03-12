@@ -1,37 +1,35 @@
 import {
-  Component,
-  ChangeDetectionStrategy,
-  Input,
-  OnChanges,
+	Component,
+	ChangeDetectionStrategy,
+	Input,
+	OnChanges,
 } from '@angular/core';
 
 @Component({
-  selector: 'app-avatar-image',
-  templateUrl: './avatar-image.component.html',
-  styleUrls: ['./avatar-image.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-avatar-image',
+	templateUrl: './avatar-image.component.html',
+	styleUrls: ['./avatar-image.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarImageComponent implements OnChanges {
-  @Input() user: any;
+	@Input() item: { name: string; urlPicture: string } = {
+		name: 'Usuario Misterioso',
+		urlPicture: 'assets/images/icon/staff.png',
+	};
 
-  initials: string;
+	initials: string;
 
-  ngOnChanges() {
-    this.initials = this.getInitialsFromName(this.user);
-  }
+	ngOnChanges() {
+		this.initials = this.getInitialsFromName(this.item);
+	}
 
-  getInitialsFromName(user) {
-    if (user.lastName && user.firstName) {
-      return (
-        user.firstName.charAt(0).toUpperCase() +
-        user.lastName.charAt(0).toUpperCase()
-      );
-    } else if (user.name) {
-      return user.name
-        .split(' ')
-        .map((word) => word.charAt(0).toUpperCase())
-        .join('')
-        .slice(0, 2);
-    }
-  }
+	getInitialsFromName(user) {
+		if (user.name) {
+			return user.name
+				.split(' ')
+				.map((word) => word.charAt(0).toUpperCase())
+				.join('')
+				.slice(0, 2);
+		}
+	}
 }
