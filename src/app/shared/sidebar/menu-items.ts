@@ -41,6 +41,14 @@ export const ROUTES: RouteInfo[] = [
 		extralink: false,
 		submenu: [],
 	},
+	{
+		path: '/archive-types',
+		title: 'Tipos de Documento',
+		icon: 'fa fa-archive',
+		class: '',
+		extralink: false,
+		submenu: [],
+	},
 	/* {
     path: "/component/toast",
     title: "Toast",
