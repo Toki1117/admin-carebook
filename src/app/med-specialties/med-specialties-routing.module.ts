@@ -13,7 +13,7 @@ const routes: Routes = [
         path: 'overview',
         component: OverviewComponent,
         data: {
-          title: 'Medical Specialties'
+          title: 'Especialidades Médicas'
         }
       }
     ]

@@ -9,6 +9,7 @@ import { FullTableModule } from '../shared/full-table/full-table.module';
 import { SidebarDLModule } from '../shared/sidebar-dl/sidebar.module';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmDialogModule } from '../shared/confirm-dialog/confirm-dialog.module';
+import { FormBuilderHelperModule } from '../shared/form-builder-helper/form-builder-helper.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ConfirmDialogModule } from '../shared/confirm-dialog/confirm-dialog.mod
     FullTableModule,
     SidebarDLModule,
     NgbModalModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FormBuilderHelperModule
   ],
   providers: [MedSpecialtiesService]
 })
