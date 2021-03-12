@@ -8,14 +8,13 @@ input.ng-invalid.ng-touched {
 	border: red solid 1px !important;
 }
 
-.required {
+label.required::after {
 	content: '*';
 	color: red;
+	margin-left: 4px;
 }
 
 .feedback {
 	font-size: smaller;
 	margin-left: 1em;
 }
-
-
