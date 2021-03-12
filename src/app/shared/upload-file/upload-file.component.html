@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card" [ngClass]="{ 'shadow-none': !boxShadow }">
+      <div class="card-body">
+        <h4 class="header-title m-t-0">Upload</h4>
+        <p class="text-muted font-13 m-b-30">
+          <!-- DropzoneJS is an open source library that provides drag’n’drop file uploads with image previews. -->
+        </p>
+
+        <ngx-dropzone
+          [accept]="'image/png,image/jpeg'"
+          class=""
+          (change)="onFilesAdded($event)"
+        >
+          <ngx-dropzone-label>
+            <i class="h1 text-muted dripicons-cloud-upload"></i>
+            <h3 [style]="fontSize">Drop files here or click to upload.</h3>
+          </ngx-dropzone-label>
+        </ngx-dropzone>
+
+        <!-- Preview -->
+        <div class="dropzone-previews mt-3" id="file-previews">
+          <div
+            class="card mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+            *ngFor="let file of files"
+          >
+            <div class="p-2">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <img
+                    data-dz-thumbnail=""
+                    class="avatar-sm rounded bg-light"
+                    alt="{{ file.name }}"
+                    [src]="file['preview']"
+                  />
+                </div>
+                <div class="col pl-0">
+                  <a
+                    href="javascript:void(0);"
+                    class="text-muted font-weight-bold"
+                    data-dz-name=""
+                    >{{ file.name }}</a
+                  >
+                  <p class="mb-0" data-dz-size="">
+                    <strong>{{ file['formattedSize'] }}</strong>
+                  </p>
+                </div>
+                <div class="col-auto">
+                  <!-- Button -->
+                  <button
+                    class="btn btn-link btn-lg text-muted"
+                    (click)="removeFile(file)"
+                  >
+                    <i class="dripicons-cross"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end card-body -->
+    </div>
+    <!-- end card-->
+  </div>
+  <!-- end col-->
+</div>
+<!-- end row -->
