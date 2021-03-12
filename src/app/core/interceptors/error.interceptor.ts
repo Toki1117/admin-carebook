@@ -10,12 +10,14 @@ import { catchError } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ToastService } from 'src/app/shared/toast/toast/toast.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     private authService: AuthService,
-    private alertService: ToastService
+    private alertService: ToastService,
+    private router: Router
   ) {}
 
   intercept(
@@ -26,7 +28,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((err) => {
         if (err.status === 401) {
           this.authService.logout();
-          location.reload();
+          this.router.navigate(['/authentication'])
         }
 
         if (err.status !== 500 && !!err.error && !!err.error.message) {
