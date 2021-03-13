@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ArchiveType } from '../../models/archive-type';
-import { ITableAction, ITableColumn, ITableHeaderButton, ITableData, ITableRowClick } from 'src/app/shared/full-table/full-table.interface';
+import {
+  ITableAction,
+  ITableColumn,
+  ITableHeaderButton,
+  ITableData,
+  ITableRowClick,
+} from 'src/app/shared/full-table/full-table.interface';
 import { FormFieldCreatorModel } from 'src/app/shared/form-builder-helper/form-builder-helper.interface';
 import { BehaviorSubject, from, Observable, iif } from 'rxjs';
 import { Select2Data } from 'ng-select2-component';
@@ -8,7 +14,6 @@ import { map, tap } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastService } from 'src/app/shared/toast/toast/toast.service';
 import { ArchiveTypeService } from '../../services/archive-type.service';
 import { orderBy } from 'lodash';
 import { AlertService } from 'src/app/shared/alert/alert.service';
@@ -16,10 +21,9 @@ import { AlertService } from 'src/app/shared/alert/alert.service';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss']
+  styleUrls: ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
-
   selectedItem: ArchiveType = null;
   sidebarTitles;
   columns: ITableColumn[] = [];
@@ -49,26 +53,10 @@ export class OverviewComponent implements OnInit {
   }
 
   loadData() {
-    this.archiveTypeService
-      .getAll()
-      .pipe(map((ms) => this.transformData(ms)))
-      .subscribe((data) => {
-        this.data = { data, loading: false };
-        this.setForm();
-      });
-  }
-
-  transformData(data: ArchiveType[]) {
-    const selectData: Select2Data = [];
-    const tableData = data.map((ms) => {
-      selectData.push({ label: ms.name, value: ms.idArchive });
-      const item = {
-        ...ms,
-      };
-      return item;
+    this.archiveTypeService.getAll().subscribe((data) => {
+      this.data = { data, loading: false };
+      this.setForm();
     });
-    this.archiveList.next(orderBy(selectData, 'name'));
-    return tableData;
   }
 
   onTableEventHandler(event: ITableRowClick<ArchiveType>) {
@@ -78,11 +66,11 @@ export class OverviewComponent implements OnInit {
         this.editAction(event.data);
         break;
       }
-       case this.actions[1].label: {
+      case this.actions[1].label: {
         // delete
         this.promptDelete(event.data).subscribe();
         break;
-      } 
+      }
       default:
         // add
         this.titleSidebar = this.sidebarTitles.add;
@@ -109,7 +97,7 @@ export class OverviewComponent implements OnInit {
 
   removeOne(id: string) {
     this.archiveTypeService.deleteArchiveType(id).subscribe((res) => {
-      this.alertService.show({text: res.message, type: 'success'});
+      this.alertService.show({ text: res.message, type: 'success' });
       this.loadData();
     });
   }
@@ -129,11 +117,11 @@ export class OverviewComponent implements OnInit {
         label: 'Editar',
         sidebarAction: true,
       },
-       {
-				icon: 'mdi mdi-delete',
-				label: 'Borrar',
-				sidebarAction: true,
-			}, 
+      /* {
+        icon: 'mdi mdi-delete',
+        label: 'Borrar',
+        sidebarAction: true,
+      }, */
     ];
     this.buttons = [
       {
@@ -156,7 +144,7 @@ export class OverviewComponent implements OnInit {
       {
         name: 'name',
         label: 'Nombre',
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.maxLength(255)],
         value: model?.name || '',
       },
     ];
@@ -167,11 +155,11 @@ export class OverviewComponent implements OnInit {
       () => !!this.selectedItem,
       this.archiveTypeService.updateArchiveType(
         event,
-        this.selectedItem?.idArchive
+        this.selectedItem?.idType
       ),
       this.archiveTypeService.createArchiveType(event)
     ).subscribe((res) => {
-      this.alertService.show({text: res.message, type: 'success'});
+      this.alertService.show({ text: res.message, type: 'success' });
       this.onSidebarHide();
       this.loadData();
     });
@@ -189,5 +177,4 @@ export class OverviewComponent implements OnInit {
     this.setForm(data);
     this.showSidebar = true;
   }
-
 }

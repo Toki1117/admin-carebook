@@ -118,7 +118,7 @@ export class OverviewComponent implements OnInit {
 
   removeOne(id: string) {
     this.medSpecialyService.deleteSpecialty(id).subscribe((res) => {
-      this.alertService.show({text: res.message, type: 'success'});
+      this.alertService.show({ text: res.message, type: 'success' });
       this.loadData();
     });
   }
@@ -173,12 +173,13 @@ export class OverviewComponent implements OnInit {
       {
         name: 'name',
         label: 'Nombre',
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.maxLength(255)],
         value: model?.name || '',
       },
       {
         name: 'description',
         label: 'Descripción',
+        validators: [Validators.maxLength(1000)],
         isTextarea: true,
         value: model?.description || '',
       },
@@ -201,7 +202,7 @@ export class OverviewComponent implements OnInit {
       ),
       this.medSpecialyService.createSpecialty(event)
     ).subscribe((res) => {
-      this.alertService.show({text: res.message, type: 'success'});
+      this.alertService.show({ text: res.message, type: 'success' });
       this.onSidebarHide();
       this.loadData();
     });
