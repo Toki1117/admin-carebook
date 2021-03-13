@@ -1,0 +1,7 @@
+<div class="rating-container">
+  <i
+    *ngFor="let star of ratingStars"
+    class="mdi mdi-18px"
+    [ngClass]="{ 'mdi-star': star, 'mdi-star-outline': !star }"
+  ></i>
+</div>

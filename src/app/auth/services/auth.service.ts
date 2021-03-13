@@ -1,3 +1,4 @@
+import { TokenInfo } from './../models/token-info.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -6,13 +7,15 @@ import { shareReplay, take, takeWhile, tap } from 'rxjs/operators';
 import { Account } from '../models/account';
 import jwtDecode from 'jwt-decode';
 import { StorageService } from 'src/app/shared/services/storage.service';
+import { UserInfo } from '../models/user-info.model';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AuthService {
 	private loggedIn = new BehaviorSubject<boolean>(false);
-	private user$ = new BehaviorSubject(null);
+	private user$ = new BehaviorSubject<UserInfo>(null);
+	private tokenInfo$ = new BehaviorSubject<TokenInfo>(null);
 	constructor(private http: HttpClient, private ls: StorageService) {}
 
 	get currentUser() {
@@ -24,10 +27,12 @@ export class AuthService {
 	}
 
 	setLoggedIn(loggedIn: boolean, token = null) {
-		const user = token ? jwtDecode(token) : null;
+		const tokenInfo: TokenInfo = token ? jwtDecode(token) : null;
+		console.log(token);
+		this.tokenInfo$.next(tokenInfo)
 		this.ls.setItem(token, 'token');
 		this.loggedIn.next(loggedIn);
-		this.user$.next({ ...this.user$.value, token, user });
+		this.user$.next({ idAccount: tokenInfo.id_account, email: tokenInfo.email });
 	}
 
 	login(payload: Account) {

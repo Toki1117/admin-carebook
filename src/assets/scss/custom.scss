@@ -1,13 +1,17 @@
 // In this scss you can overwrite all our scss, we suggested you to add your scss into this, so whenever the update comes it will not affect your code.
+@import '~src/assets/components/right-flyout';
+
+@import '~src/assets/components/preloader';
 
 // Forms
 input.ng-invalid.ng-touched {
 	border: red solid 1px !important;
 }
 
-.required {
+label.required::after {
 	content: '*';
 	color: red;
+	margin-left: 4px;
 }
 
 .feedback {

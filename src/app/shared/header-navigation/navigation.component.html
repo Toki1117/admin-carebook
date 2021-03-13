@@ -44,26 +44,30 @@
   <!-- ============================================================== -->
   <!-- User profile and search -->
   <!-- ============================================================== -->
-  <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
-    <a
-      ngbDropdownToggle
-      class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
-      href="javascript:void(0)"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
+  <li
+    class="nav-item dropdown"
+    ngbDropdown
+    #myDrop="ngbDropdown"
+    placement="bottom-right"
+  >
+    <div
+      class="d-flex nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+      id="dropdownManual"
+      ngbDropdownAnchor
+      (click)="openDrop($event)"
     >
-      <img
-        src="assets/images/users/1.jpg"
-        alt="user"
-        class="rounded-circle"
-        width="31"
-      />
-    </a>
-    <div class="dropdown-menu user-dd" ngbDropdownMenu>
-      <a class="dropdown-item" href="javascript:void(0)">
-        <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a
-      >
+      <app-avatar-image></app-avatar-image>
+      <div class="ml-2" *ngIf="user$ | async as user; else default">{{ user.email }}</div>
+      <ng-template #default><div class="ml-2">admin@mail.com</div></ng-template>
+    </div>
+    <div
+      class="dropdown-menu user-dd"
+      ngbDropdownMenu
+      aria-labelledby="dropdownManual"
+    >
+      <button class="dropdown-item btn btn-link" (click)="logout()">
+        <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout
+      </button>
     </div>
   </li>
   <!-- ============================================================== -->

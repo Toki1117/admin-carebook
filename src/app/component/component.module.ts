@@ -8,7 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComponentsRoutes } from './component.routing';
 import { CardsComponent } from './card/card.component';
 import { ToastComponent } from './toast/toast.component';
-import { ToastsContainer } from './toast/toast-container';
+import { ToastModule } from '../shared/toast/toast/toast.module';
 
 @NgModule({
   imports: [
@@ -16,12 +16,12 @@ import { ToastsContainer } from './toast/toast-container';
     RouterModule.forChild(ComponentsRoutes),
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    ToastModule
   ],
   declarations: [
     CardsComponent,
     ToastComponent,
-    ToastsContainer
   ]
 })
 export class ComponentsModule {}

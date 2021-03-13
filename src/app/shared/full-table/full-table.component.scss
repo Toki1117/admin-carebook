@@ -1,0 +1,62 @@
+@import '~src/assets/components/full-table-search-input';
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.table-header {
+  display: flex;
+  align-items: center;
+}
+
+td:nth-last-child(1) {
+  text-align: right;
+}
+
+td a {
+  color: #22a8e0;
+}
+
+td span i:before {
+  line-height: 1.6;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.no-icon {
+  display: none;
+}
+
+.table-avatar {
+  width: 2em;
+  min-width: 2em;
+  height: 2em;
+}
+
+.badge-warning {
+  color: white;
+}
+
+.app-search {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.download-container {
+  background-color: gainsboro;
+}
+
+.entry-container {
+  display: flex;
+  align-items: center;
+}
+
+.entry {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}

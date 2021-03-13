@@ -9,12 +9,16 @@ export const Approutes: Routes = [
   {
     path: '',
     component: FullComponent,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
+        path: 'medical-specialties',
+        loadChildren: () => import('./med-specialties/med-specialties.module').then(m => m.MedSpecialtiesModule)
       },
       {
         path: 'component',
@@ -41,6 +45,7 @@ export const Approutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/authentication'
+    redirectTo: '/dashboard',
+    
   }
 ];
