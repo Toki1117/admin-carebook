@@ -66,11 +66,11 @@ export class OverviewComponent implements OnInit {
         this.editAction(event.data);
         break;
       }
-      case this.actions[1].label: {
-        // delete
-        this.promptDelete(event.data).subscribe();
-        break;
-      }
+      // case this.actions[1].label: {
+      //   // delete
+      //   this.promptDelete(event.data).subscribe();
+      //   break;
+      // }
       default:
         // add
         this.titleSidebar = this.sidebarTitles.add;
