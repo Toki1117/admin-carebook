@@ -33,7 +33,7 @@ export const Approutes: Routes = [
         loadChildren: () => import('./archive-type/archive-type.module').then(m => m.ArchiveTypeModule)
       },
       {
-        path: 'physical-activities',
+        path: 'physical-activities-types',
         loadChildren: () => import('./physical-activity/physical-activity.module').then(m => m.PhysicalActivityModule)
       }
     ]
