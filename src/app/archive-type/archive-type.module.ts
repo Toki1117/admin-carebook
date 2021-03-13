@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ArchiveTypeService } from './services/archive-type.service';
 import { LayoutComponent } from './views/layout/layout.component';
 import { ArchiveComponent } from './views/archive/archive.component';
-import { FormArchiveComponent } from './components/form-archive/form-archive.component';
+import { OverviewComponent } from './components/overview/overview.component';
 
 
 
 @NgModule({
-  declarations: [LayoutComponent, ArchiveComponent, FormArchiveComponent],
+  declarations: [LayoutComponent, ArchiveComponent, OverviewComponent],
   imports: [
     CommonModule
   ],
