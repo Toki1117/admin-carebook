@@ -1,20 +1,29 @@
 // In this scss you can overwrite all our scss, we suggested you to add your scss into this, so whenever the update comes it will not affect your code.
+// right sidebar
 @import '~src/assets/components/right-flyout';
 
+// Loader
 @import '~src/assets/components/preloader';
+
+// CDK angular
+@import '~@angular/cdk/overlay-prebuilt.css';
 
 // Forms
 input.ng-invalid.ng-touched {
-	border: red solid 1px !important;
+  border: red solid 1px !important;
 }
 
 label.required::after {
-	content: '*';
-	color: red;
-	margin-left: 4px;
+  content: '*';
+  color: red;
+  margin-left: 4px;
 }
 
 .feedback {
-	font-size: smaller;
-	margin-left: 1em;
+  font-size: smaller;
+  margin-left: 1em;
+}
+
+div.cdk-overlay-container {
+  z-index: 1100;
 }
