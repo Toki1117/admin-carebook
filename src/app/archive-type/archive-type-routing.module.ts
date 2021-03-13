@@ -1,10 +1,10 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { LayoutComponent } from "./views/layout/layout.component";
-import { ArchiveComponent } from "./views/archive/archive.component";
+import { OverviewComponent } from "./components/overview/overview.component";
 
 const routes: Routes = [{
-    path: 'overview',
+    path: '',
     component: LayoutComponent,
     children: [
       {
@@ -14,7 +14,10 @@ const routes: Routes = [{
       },
       {
         path: 'overview',
-        component: ArchiveComponent
+        component: OverviewComponent,
+        data: {
+          title: 'Tipos de Documentos'
+        }
       }
     ]
   }];
