@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from 'src/app/shared/toast/toast/toast.service';
 import { ArchiveTypeService } from '../../services/archive-type.service';
 import { orderBy } from 'lodash';
+import { AlertService } from 'src/app/shared/alert/alert.service';
 
 @Component({
   selector: 'app-overview',
@@ -19,7 +20,7 @@ import { orderBy } from 'lodash';
 })
 export class OverviewComponent implements OnInit {
 
-selectedItem: ArchiveType = null;
+  selectedItem: ArchiveType = null;
   sidebarTitles;
   columns: ITableColumn[] = [];
   actions: ITableAction[] = [];
@@ -35,7 +36,7 @@ selectedItem: ArchiveType = null;
   constructor(
     private archiveTypeService: ArchiveTypeService,
     private modal: NgbModal,
-    private alertService: ToastService
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -77,11 +78,11 @@ selectedItem: ArchiveType = null;
         this.editAction(event.data);
         break;
       }
-      /* case this.actions[1].label: {
+       case this.actions[1].label: {
         // delete
         this.promptDelete(event.data).subscribe();
         break;
-      } */
+      } 
       default:
         // add
         this.titleSidebar = this.sidebarTitles.add;
@@ -108,7 +109,7 @@ selectedItem: ArchiveType = null;
 
   removeOne(id: string) {
     this.archiveTypeService.deleteArchiveType(id).subscribe((res) => {
-      this.alertService.show(res.message);
+      this.alertService.show({text: res.message, type: 'success'});
       this.loadData();
     });
   }
@@ -128,11 +129,11 @@ selectedItem: ArchiveType = null;
         label: 'Editar',
         sidebarAction: true,
       },
-      /* {
+       {
 				icon: 'mdi mdi-delete',
 				label: 'Borrar',
 				sidebarAction: true,
-			}, */
+			}, 
     ];
     this.buttons = [
       {
@@ -170,7 +171,7 @@ selectedItem: ArchiveType = null;
       ),
       this.archiveTypeService.createArchiveType(event)
     ).subscribe((res) => {
-      this.alertService.show(res.message);
+      this.alertService.show({text: res.message, type: 'success'});
       this.onSidebarHide();
       this.loadData();
     });
