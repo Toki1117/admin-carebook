@@ -1,4 +1,4 @@
 export interface ArchiveType {
-  idArchive?: string
+  idType?: string
   name: string
 }

@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Select2Data } from 'ng-select2-component';
-import { BehaviorSubject, from, iif, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
-import { FormFieldCreatorModel } from 'src/app/shared/form-builder-helper/form-builder-helper.interface';
+import { ArchiveType } from '../../models/archive-type';
 import {
   ITableAction,
   ITableColumn,
-  ITableData,
   ITableHeaderButton,
+  ITableData,
   ITableRowClick,
 } from 'src/app/shared/full-table/full-table.interface';
-import { MedicalSpecialty } from '../../models/med-specialty.model';
-import { MedSpecialtiesService } from '../../services/med-specialties.service';
+import { FormFieldCreatorModel } from 'src/app/shared/form-builder-helper/form-builder-helper.interface';
+import { BehaviorSubject, from, Observable, iif } from 'rxjs';
+import { Select2Data } from 'ng-select2-component';
+import { map, tap } from 'rxjs/operators';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ArchiveTypeService } from '../../services/archive-type.service';
 import { orderBy } from 'lodash';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 
@@ -24,22 +24,21 @@ import { AlertService } from 'src/app/shared/alert/alert.service';
   styleUrls: ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
-  selectedItem: MedicalSpecialty = null;
+  selectedItem: ArchiveType = null;
   sidebarTitles;
   columns: ITableColumn[] = [];
   actions: ITableAction[] = [];
   buttons: ITableHeaderButton[] = [];
   showSidebar = false;
-  data: ITableData<MedicalSpecialty> = {
+  data: ITableData<ArchiveType> = {
     data: [],
     loading: true,
   };
   formModel: FormFieldCreatorModel[] = [];
-  titleSidebar = 'Agrega una nueva Especialidad Médica';
-  specialtyList = new BehaviorSubject<Select2Data>([]);
-
+  titleSidebar = 'Agrega un nuevo Tipo  de Documento';
+  archiveList = new BehaviorSubject<Select2Data>([]);
   constructor(
-    private medSpecialyService: MedSpecialtiesService,
+    private archiveTypeService: ArchiveTypeService,
     private modal: NgbModal,
     private alertService: AlertService
   ) {}
@@ -48,50 +47,30 @@ export class OverviewComponent implements OnInit {
     this.setValues();
     this.loadData();
     this.sidebarTitles = {
-      add: 'Agrega una nueva Especialidad Médica',
-      edit: 'Editar Especialidad Médica',
+      add: 'Agrega un nuevo Tipo  de Documento',
+      edit: 'Editar Tipo de Documento',
     };
   }
 
   loadData() {
-    this.medSpecialyService
-      .getAll()
-      .pipe(map((ms) => this.transformData(ms)))
-      .subscribe((data) => {
-        this.data = { data, loading: false };
-        this.setForm();
-      });
-  }
-
-  transformData(data: MedicalSpecialty[]) {
-    const selectData: Select2Data = [];
-    const tableData = data.map((ms) => {
-      selectData.push({ label: ms.name, value: ms.idMedicalSpecialty });
-      const item = {
-        ...ms,
-        parent: ms.idParent
-          ? data.find((item) => item.idMedicalSpecialty === ms.idParent).name
-          : 'NA',
-      };
-      return item;
+    this.archiveTypeService.getAll().subscribe((data) => {
+      this.data = { data, loading: false };
+      this.setForm();
     });
-
-    this.specialtyList.next(orderBy(selectData, 'name'));
-    return tableData;
   }
 
-  onTableEventHandler(event: ITableRowClick<MedicalSpecialty>) {
+  onTableEventHandler(event: ITableRowClick<ArchiveType>) {
     switch (event.type) {
       case this.actions[0].label: {
         // edit
         this.editAction(event.data);
         break;
       }
-      /* case this.actions[1].label: {
+      case this.actions[1].label: {
         // delete
         this.promptDelete(event.data).subscribe();
         break;
-      } */
+      }
       default:
         // add
         this.titleSidebar = this.sidebarTitles.add;
@@ -99,7 +78,7 @@ export class OverviewComponent implements OnInit {
     }
   }
 
-  promptDelete(item: any): Observable<any> {
+  promptDelete(item: ArchiveType): Observable<ArchiveType> {
     const modalRef = this.modal.open(ConfirmDialogComponent, {
       size: 'sm',
       centered: true,
@@ -110,14 +89,14 @@ export class OverviewComponent implements OnInit {
     return from(modalRef.result).pipe(
       tap((result) => {
         if (result === 'confirm') {
-          this.removeOne(item.idMedicalSpecialty);
+          this.removeOne(item.idType);
         }
       })
     );
   }
 
   removeOne(id: string) {
-    this.medSpecialyService.deleteSpecialty(id).subscribe((res) => {
+    this.archiveTypeService.deleteArchiveType(id).subscribe((res) => {
       this.alertService.show({ text: res.message, type: 'success' });
       this.loadData();
     });
@@ -131,14 +110,6 @@ export class OverviewComponent implements OnInit {
         clickable: true,
         ngStyle: { cursor: 'pointer' },
       },
-      {
-        field: 'description',
-        header: 'Descripcion',
-      },
-      {
-        field: 'parent',
-        header: 'Especialidad Padre',
-      },
     ];
     this.actions = [
       {
@@ -147,10 +118,10 @@ export class OverviewComponent implements OnInit {
         sidebarAction: true,
       },
       /* {
-				icon: 'mdi mdi-delete',
-				label: 'Borrar',
-				sidebarAction: true,
-			}, */
+        icon: 'mdi mdi-delete',
+        label: 'Borrar',
+        sidebarAction: true,
+      }, */
     ];
     this.buttons = [
       {
@@ -168,7 +139,7 @@ export class OverviewComponent implements OnInit {
     }
   }
 
-  setForm(model?: MedicalSpecialty) {
+  setForm(model?: ArchiveType) {
     this.formModel = [
       {
         name: 'name',
@@ -176,31 +147,17 @@ export class OverviewComponent implements OnInit {
         validators: [Validators.required, Validators.maxLength(255)],
         value: model?.name || '',
       },
-      {
-        name: 'description',
-        label: 'Descripción',
-        validators: [Validators.maxLength(1000)],
-        isTextarea: true,
-        value: model?.description || '',
-      },
-      {
-        name: 'idParent',
-        label: 'Especialidad Padre',
-        isSelect: true,
-        selectValues: () => this.specialtyList.asObservable(),
-        value: model?.idParent || null,
-      },
     ];
   }
 
   submit(event) {
     iif(
       () => !!this.selectedItem,
-      this.medSpecialyService.updateSpecialty(
+      this.archiveTypeService.updateArchiveType(
         event,
-        this.selectedItem?.idMedicalSpecialty
+        this.selectedItem?.idType
       ),
-      this.medSpecialyService.createSpecialty(event)
+      this.archiveTypeService.createArchiveType(event)
     ).subscribe((res) => {
       this.alertService.show({ text: res.message, type: 'success' });
       this.onSidebarHide();
@@ -208,13 +165,13 @@ export class OverviewComponent implements OnInit {
     });
   }
 
-  onRowClick(event: ITableRowClick<MedicalSpecialty>) {
+  onRowClick(event: ITableRowClick<ArchiveType>) {
     if (event.type === this.columns[0].field) {
       this.editAction(event.data);
     }
   }
 
-  editAction(data: MedicalSpecialty) {
+  editAction(data: ArchiveType) {
     this.selectedItem = data;
     this.titleSidebar = this.sidebarTitles.edit;
     this.setForm(data);
