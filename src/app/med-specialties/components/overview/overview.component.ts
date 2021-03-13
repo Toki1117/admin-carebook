@@ -13,10 +13,10 @@ import {
   ITableHeaderButton,
   ITableRowClick,
 } from 'src/app/shared/full-table/full-table.interface';
-import { ToastService } from 'src/app/shared/toast/toast/toast.service';
 import { MedicalSpecialty } from '../../models/med-specialty.model';
 import { MedSpecialtiesService } from '../../services/med-specialties.service';
 import { orderBy } from 'lodash';
+import { AlertService } from 'src/app/shared/alert/alert.service';
 
 @Component({
   selector: 'app-overview',
@@ -37,10 +37,11 @@ export class OverviewComponent implements OnInit {
   formModel: FormFieldCreatorModel[] = [];
   titleSidebar = 'Agrega una nueva Especialidad Médica';
   specialtyList = new BehaviorSubject<Select2Data>([]);
+
   constructor(
     private medSpecialyService: MedSpecialtiesService,
     private modal: NgbModal,
-    private alertService: ToastService
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -117,7 +118,7 @@ export class OverviewComponent implements OnInit {
 
   removeOne(id: string) {
     this.medSpecialyService.deleteSpecialty(id).subscribe((res) => {
-      this.alertService.show(res.message);
+      this.alertService.show({text: res.message, type: 'success'});
       this.loadData();
     });
   }
@@ -200,7 +201,7 @@ export class OverviewComponent implements OnInit {
       ),
       this.medSpecialyService.createSpecialty(event)
     ).subscribe((res) => {
-      this.alertService.show(res.message);
+      this.alertService.show({text: res.message, type: 'success'});
       this.onSidebarHide();
       this.loadData();
     });
