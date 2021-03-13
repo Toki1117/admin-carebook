@@ -44,7 +44,7 @@ export const ROUTES: RouteInfo[] = [
 	{
 		path: '/archive-types',
 		title: 'Tipos de Documento',
-		icon: 'fa fa-archive',
+		icon: 'mdi mdi-archive',
 		class: '',
 		extralink: false,
 		submenu: [],
