@@ -3,6 +3,8 @@ import { AddictionType } from '../models/addiction-type';
 import { HttpClient } from '@angular/common/http';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { API_URL } from 'src/app/shared/utils/api-urls';
+import { Observable } from 'rxjs';
+
 
 @Injectable()
 export class AddictionTypeService {
@@ -13,7 +15,7 @@ export class AddictionTypeService {
     return this.http.get<AddictionType>(API_URL.addictionType.main)
   }
 
-  getAddictionTypebyId(id: string) {
+  getAddictionTypeById(id: string) {
     return this.http.get<AddictionType>(API_URL.addictionType.byId(id))
   }
 
