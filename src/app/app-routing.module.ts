@@ -19,11 +19,11 @@ export const Approutes: Routes = [
       {
         path: 'medical-specialties',
         loadChildren: () => import('./med-specialties/med-specialties.module').then(m => m.MedSpecialtiesModule)
-      }
-      /* {
+      },
+      {
         path: 'component',
         loadChildren: () => import('./component/component.module').then(m => m.ComponentsModule)
-      } */
+      }
     ]
   },
   {
@@ -33,6 +33,7 @@ export const Approutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/authentication'
+    redirectTo: '/dashboard',
+    
   }
 ];
