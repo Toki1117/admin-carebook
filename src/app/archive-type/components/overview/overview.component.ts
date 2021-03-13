@@ -78,7 +78,7 @@ export class OverviewComponent implements OnInit {
     }
   }
 
-  promptDelete(item: any): Observable<any> {
+  promptDelete(item: ArchiveType): Observable<ArchiveType> {
     const modalRef = this.modal.open(ConfirmDialogComponent, {
       size: 'sm',
       centered: true,
@@ -89,7 +89,7 @@ export class OverviewComponent implements OnInit {
     return from(modalRef.result).pipe(
       tap((result) => {
         if (result === 'confirm') {
-          this.removeOne(item.idArchive);
+          this.removeOne(item.idType);
         }
       })
     );
