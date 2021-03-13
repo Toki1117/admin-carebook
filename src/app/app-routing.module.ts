@@ -23,6 +23,18 @@ export const Approutes: Routes = [
       {
         path: 'component',
         loadChildren: () => import('./component/component.module').then(m => m.ComponentsModule)
+      },
+      {
+        path: 'addiction-types',
+        loadChildren: () => import('./addiction-type/addiction-type.module').then(m => m.AddictionTypeModule)
+      },
+      {
+        path: 'archive-types',
+        loadChildren: () => import('./archive-type/archive-type.module').then(m => m.ArchiveTypeModule)
+      },
+      {
+        path: 'physical-activities',
+        loadChildren: () => import('./physical-activity/physical-activity.module').then(m => m.PhysicalActivityModule)
       }
     ]
   },
