@@ -18,7 +18,7 @@ export const ROUTES: RouteInfo[] = [
 		submenu: [],
 	},
 	{
-		path: '/phisical-activity-types',
+		path: '/physical-activities-types',
 		title: 'Tipos de Actividad Física',
 		icon: 'mdi mdi-arrange-bring-to-front',
 		class: '',

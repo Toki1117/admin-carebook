@@ -1,28 +1,31 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { FormPhysicalComponent } from './components/form-physical/form-physical.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './views/layout/layout.component';
 import { PhysicalActivityComponent } from './views/physical-activity/physical-activity.component';
 
-const routes: Routes = [{
-    path: 'overview',
+const routes: Routes = [
+  {
+    path: '',
     component: LayoutComponent,
     children: [
       {
         path: '',
         redirectTo: 'overview',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'overview',
-        component: PhysicalActivityComponent
-      }
-    ]
-  }];
+        component: PhysicalActivityComponent,
+        data: {
+          title: 'Tipos de Actividad Física'
+        }
+      },
+    ],
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  declarations: [FormPhysicalComponent, LayoutComponent, PhysicalActivityComponent]
 })
-export class PhysicalActivityRoutingModule { }
+export class PhysicalActivityRoutingModule {}
