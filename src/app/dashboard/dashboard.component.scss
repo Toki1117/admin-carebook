@@ -1,0 +1,56 @@
+.dashboard-cards {
+  width: 100%;
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-gap: 2em;
+}
+
+.glass {
+  cursor: pointer;
+  max-width: 385px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 20px;
+  position: relative;
+  color: white;
+  font-weight: 700;
+
+  &:hover {
+    transform: rotate(-5deg);
+    background: rgba(102, 15, 242, 0.5);
+  }
+}
+
+.indigo {
+  background: rgba(102, 15, 242, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(1.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.bg-dashboard {
+  border: solid 1.5em rgba(white, 0.2);
+  width: 100%;
+  height: 100vh;
+  background: url('./../../assets/images/background/login-register.jpg')
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  /* filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="~assets/images/background/login-register.jpg", sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='~assets/images/background/login-register.jpg', sizingMethod='scale')"; */
+}
+
+.cricle-outline {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 3px solid white;
+}
