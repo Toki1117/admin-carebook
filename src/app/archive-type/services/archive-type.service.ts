@@ -28,7 +28,7 @@ export class ArchiveTypeService {
   updateArchiveType (
     archiveType: ArchiveType, id: string): Observable<ApiResponse<ArchiveType>>  {
     return this.http
-      .put<ArchiveType>(API_URL.archiveType.update(id), archiveType)
+      .patch<ArchiveType>(API_URL.archiveType.update(id), archiveType)
       .pipe(map((data) => ({ data, message: 'Actualización exitosa' })));
   }
 
