@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { StorageService } from 'src/app/shared/services/storage.service';
 import { PhysicalActivity } from '../models/physical-activity';
 import { API_URL } from 'src/app/shared/utils/api-urls';
 
 @Injectable()
 export class PhysicalActivityService {
 
-  constructor(private http: HttpClient, private ls: StorageService) { }
+  constructor(private http: HttpClient) { }
 
   getPhysicalActivitys() {
     return this.http.get<PhysicalActivity>(API_URL.physicalActivity.main)

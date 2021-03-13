@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { StorageService } from 'src/app/shared/services/storage.service';
 import { ArchiveType } from '../models/archive-type';
 import { API_URL } from 'src/app/shared/utils/api-urls';
 
 @Injectable()
 export class ArchiveTypeService {
 
-  constructor(private http: HttpClient, private ls: StorageService) { }
+  constructor(private http: HttpClient) { }
 
   getArchiveTypes() {
     return this.http.get<ArchiveType>(API_URL.archiveType.main)

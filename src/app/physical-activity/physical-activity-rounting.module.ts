@@ -14,7 +14,7 @@ const routes: Routes = [{
         pathMatch: 'full'
       },
       {
-        path: 'physical',
+        path: 'overview',
         component: PhysicalActivityComponent
       }
     ]

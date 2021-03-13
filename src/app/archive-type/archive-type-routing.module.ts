@@ -13,7 +13,7 @@ const routes: Routes = [{
         pathMatch: 'full'
       },
       {
-        path: 'archive',
+        path: 'overview',
         component: ArchiveComponent
       }
     ]

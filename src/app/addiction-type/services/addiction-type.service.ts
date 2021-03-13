@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AddictionType } from '../models/addiction-type';
 import { HttpClient } from '@angular/common/http';
-import { StorageService } from 'src/app/shared/services/storage.service';
 import { API_URL } from 'src/app/shared/utils/api-urls';
-import { Observable } from 'rxjs';
 
 
 @Injectable()
 export class AddictionTypeService {
 
-  constructor(private http: HttpClient, private ls: StorageService) { }
+  constructor(private http: HttpClient) { }
 
   getAddictionTypes() {
     return this.http.get<AddictionType>(API_URL.addictionType.main)
