@@ -8,7 +8,7 @@ const routes: Routes = [ {
     component: LayoutComponent,
     children: [
       {
-        path: '',
+        path: 'overview',
         redirectTo: 'addiction',
         pathMatch: 'full'
       },

@@ -4,11 +4,11 @@ import { LayoutComponent } from "./views/layout/layout.component";
 import { ArchiveComponent } from "./views/archive/archive.component";
 
 const routes: Routes = [{
-    path: '',
+    path: 'overview',
     component: LayoutComponent,
     children: [
       {
-        path: '',
+        path: 'overview',
         redirectTo: 'archive',
         pathMatch: 'full'
       },

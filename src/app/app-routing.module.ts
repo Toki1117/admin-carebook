@@ -21,15 +21,15 @@ export const Approutes: Routes = [
         loadChildren: () => import('./component/component.module').then(m => m.ComponentsModule)
       },
       {
-        path: 'addiction-type',
+        path: 'addiction-types',
         loadChildren: () => import('./addiction-type/addiction-type.module').then(m => m.AddictionTypeModule)
       },
       {
-        path: 'archive-type',
+        path: 'archive-types',
         loadChildren: () => import('./archive-type/archive-type.module').then(m => m.ArchiveTypeModule)
       },
       {
-        path: 'physical-activity',
+        path: 'physical-activities',
         loadChildren: () => import('./physical-activity/physical-activity.module').then(m => m.PhysicalActivityModule)
       }
     ]

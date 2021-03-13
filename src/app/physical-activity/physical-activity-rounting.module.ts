@@ -5,11 +5,11 @@ import { LayoutComponent } from './views/layout/layout.component';
 import { PhysicalActivityComponent } from './views/physical-activity/physical-activity.component';
 
 const routes: Routes = [{
-    path: '',
+    path: 'overview',
     component: LayoutComponent,
     children: [
       {
-        path: '',
+        path: 'overview',
         redirectTo: 'physical',
         pathMatch: 'full'
       },
