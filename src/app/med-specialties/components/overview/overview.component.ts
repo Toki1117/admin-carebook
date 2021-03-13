@@ -192,8 +192,6 @@ export class OverviewComponent implements OnInit {
   }
 
   submit(event) {
-    console.log(this.selectedItem);
-    
     iif(
       () => !!this.selectedItem,
       this.medSpecialyService.updateSpecialty(
