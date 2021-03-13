@@ -9,8 +9,8 @@ const routes: Routes = [{
     component: LayoutComponent,
     children: [
       {
-        path: 'overview',
-        redirectTo: 'physical',
+        path: '',
+        redirectTo: 'overview',
         pathMatch: 'full'
       },
       {

@@ -8,8 +8,8 @@ const routes: Routes = [{
     component: LayoutComponent,
     children: [
       {
-        path: 'overview',
-        redirectTo: 'archive',
+        path: '',
+        redirectTo: 'overview',
         pathMatch: 'full'
       },
       {
