@@ -1,4 +1,4 @@
 export interface AddictionType {
-  id?: string,
+  idAddiction?: string,
   name: string
 }
