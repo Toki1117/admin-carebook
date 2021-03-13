@@ -14,7 +14,10 @@ const routes: Routes = [ {
       },
       {
         path: 'overview',
-        component: AddictionTypeComponent
+        component: AddictionTypeComponent,
+        data: {
+          title: 'Tipo de Adicciones'
+        }
       }
     ]
   }];
