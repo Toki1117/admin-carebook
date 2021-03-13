@@ -1,19 +1,28 @@
-<p>overview works!</p>
+<div class="ngb-toasts"></div>
+
 <app-full-table
-	actionHeader=""
-	[columns]="columns"
-	[actions]="actions"
-	[headerButtons]="buttons"
-	[data]="data$ | async"
-	(actionCallback)="onTableEventHandler($event)"
-	(buttonCallback)="onTableEventHandler($event)"
+  actionHeader=""
+  [columns]="columns"
+  [actions]="actions"
+  [headerButtons]="buttons"
+  [data]="data"
+  (actionCallback)="onTableEventHandler($event)"
+  (buttonCallback)="onTableEventHandler($event)"
+  (rowClick)="onRowClick($event)"
 ></app-full-table>
 <i class="mdi mdi-alert-circle-outline"></i>
 <app-sidebar-dl
-	[isShowing]="showSidebar"
-	[title]=""
-	[size]="'xLarge'"
-	(onHide)="onSidebarHide()"
+  [isShowing]="showSidebar"
+  [title]="titleSidebar"
+  size="large"
+  (onHide)="onSidebarHide()"
 >
-sdnjdkwnjkwefn
+  <app-form-builder
+    *ngIf="showSidebar"
+    buttonText="Guardar"
+    [formModel]="formModel"
+    [triggerReset]="false"
+    (onFormSubmit)="submit($event)"
+    (onFormCancel)="onSidebarHide()"
+  ></app-form-builder>
 </app-sidebar-dl>
