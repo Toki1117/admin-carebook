@@ -57,8 +57,7 @@
       (click)="openDrop($event)"
     >
       <app-avatar-image></app-avatar-image>
-      <div class="ml-2" *ngIf="user$ | async as user; else default">{{ user.email }}</div>
-      <ng-template #default><div class="ml-2">admin@mail.com</div></ng-template>
+      <div class="ml-2" *ngIf="user$ | async as user">{{ user.email }}</div>
     </div>
     <div
       class="dropdown-menu user-dd"

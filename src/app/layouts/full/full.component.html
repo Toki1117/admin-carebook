@@ -28,7 +28,7 @@
           class="nav-toggler waves-effect waves-light d-block d-md-none"
           href="javascript:void(0)"
         >
-          <i [ngClass]="showMobileMenu ? 'ti-close' : 'ti-menu'"></i>
+          <i class="text-dark" [ngClass]="showMobileMenu ? 'ti-close' : 'ti-menu'"></i>
         </a>
         <!-- ============================================================== -->
         <!-- Logo -->
@@ -49,7 +49,7 @@
           <!-- Logo text -->
           <span class="logo-text">
             <!-- Light Logo text -->
-            <h3 class="m-0"><b>CareBook Admin</b></h3>
+            <h3 class="m-0"><span class="logo-name">CareBook</span>&nbsp;<small class="font-bold">Admin</small> </h3>
           </span>
         </a>
         <!-- ============================================================== -->
@@ -126,7 +126,7 @@
     <!-- ============================================================== -->
     <!-- footer -->
     <!-- ============================================================== -->
-    <footer class="footer text-center">@2021 CareBook</footer>
+    <footer class="footer text-center">@{{ year }} CareBook</footer>
     <!-- ============================================================== -->
     <!-- End footer -->
     <!-- ============================================================== -->
