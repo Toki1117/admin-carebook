@@ -1,13 +1,16 @@
 .dashboard-cards {
   width: 100%;
+  height: 100%;
   display: grid;
   align-items: center;
+  justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   grid-gap: 2em;
 }
 
-.glass {
+.frame {
   cursor: pointer;
+  width: 100%;
   max-width: 385px;
   height: 260px;
   display: flex;
@@ -19,22 +22,39 @@
   color: white;
   font-weight: 700;
 
-  &:hover {
-    transform: rotate(-5deg);
-    background: rgba(102, 15, 242, 0.5);
-  }
+  @media (max-width: 490px) { height: 100%; }
 }
 
-.indigo {
+.indigo-glass {
   background: rgba(102, 15, 242, 0.2);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(1.5px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
+  
+    &:hover {
+      transform: rotate(-5deg);
+      background: rgba(102, 15, 242, 0.5);
+    }
+}
+
+.blue-glass {
+  background: rgba(55,128,226, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(55,128,226, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(1.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  &:hover {
+    transform: rotate(-5deg);
+    background: rgba(55,128,226, 0.5);
+  }
 }
 
 .bg-dashboard {
+  border-radius: 8px;
   border: solid 1.5em rgba(white, 0.2);
   width: 100%;
   height: 100vh;
@@ -44,8 +64,10 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  /* filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="~assets/images/background/login-register.jpg", sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='~assets/images/background/login-register.jpg', sizingMethod='scale')"; */
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="./../../assets/images/background/login-register.jpg", sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./../../assets/images/background/login-register.jpg', sizingMethod='scale')";
+
+  @media (max-width: 600px) { height: 100%; }
 }
 
 .cricle-outline {
