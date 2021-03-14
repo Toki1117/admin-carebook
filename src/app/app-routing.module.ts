@@ -9,7 +9,7 @@ export const Approutes: Routes = [
   {
     path: '',
     component: FullComponent,
-    //canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
       {
@@ -46,6 +46,6 @@ export const Approutes: Routes = [
   {
     path: '**',
     redirectTo: '/dashboard',
-    
+    pathMatch: 'full'
   }
 ];
