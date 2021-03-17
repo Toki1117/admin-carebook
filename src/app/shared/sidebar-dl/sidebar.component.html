@@ -8,7 +8,7 @@
     "
     [excludeBeforeClick]="true"
     [delayClickOutsideInit]="true"
-    [ngStyle]="{ width: isShowing ? sidebarWidth : '0' }"
+    [ngStyle]="{ 'max-width': isShowing ? sidebarWidth : '0', width: '100%' }"
   >
     <div *ngIf="isShowing">
       <div class="side-title border-bottom mx-2">
