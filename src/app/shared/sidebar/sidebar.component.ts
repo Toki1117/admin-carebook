@@ -39,4 +39,9 @@ export class SidebarComponent implements OnInit {
     this.user$ = this.authService.currentUser;
     this.sidebarnavItems = ROUTES.filter(sidebarnavItem => sidebarnavItem);
   }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/'])
+  }
 }
