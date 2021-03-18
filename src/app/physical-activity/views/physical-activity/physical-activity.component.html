@@ -1,0 +1,26 @@
+<app-full-table
+  searchField="intensity"
+  actionHeader=""
+  [columns]="columns"
+  [actions]="actions"
+  [headerButtons]="buttons"
+  [data]="data"
+  (actionCallback)="onTableEventHandler($event)"
+  (buttonCallback)="onTableEventHandler($event)"
+  (rowClick)="onRowClick($event)"
+></app-full-table>
+<app-sidebar-dl
+  [isShowing]="showSidebar"
+  [title]="titleSidebar"
+  size="large"
+  (onHide)="onSidebarHide()"
+>
+  <app-form-builder
+    *ngIf="showSidebar"
+    buttonText="Guardar"
+    [formModel]="formModel"
+    [triggerReset]="false"
+    (onFormSubmit)="submit($event)"
+    (onFormCancel)="onSidebarHide()"
+  ></app-form-builder>
+</app-sidebar-dl>

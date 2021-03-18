@@ -4,7 +4,7 @@ import {Project,projects} from './project-data';
 @Component({
   selector: 'app-project-of-month',
   templateUrl: './project-of-month.component.html',
-  styleUrls: ['./project-of-month.component.css']
+  styleUrls: ['./project-of-month.component.scss']
 })
 export class ProjectOfMonthComponent implements OnInit {
 

@@ -1,1 +1,9 @@
+.logo-container {
+  max-width: 4rem;
+  height: auto;
+}
 
+.logo-name {
+  text-shadow: -1px 1px 1px var(--primary), 1px 1px 1px var(--primary);
+  font-weight: bold;
+}

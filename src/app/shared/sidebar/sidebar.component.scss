@@ -1,1 +1,14 @@
+.sidebar-user-avatar {
+    width: 4rem;
+    height: auto;
+}
 
+.sidebar-user-info {
+    display: none !important;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 0 48px 0;
+    border-bottom: 1px solid var(--gray);
+
+    @media (max-width: 689px) { display: flex !important; }
+}

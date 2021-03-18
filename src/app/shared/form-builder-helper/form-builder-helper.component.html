@@ -1,0 +1,311 @@
+<form [formGroup]="formObject">
+  <div class="mb-2">
+    <div class="row">
+      <div
+        *ngFor="let frmFld of formModel"
+        [ngClass]="frmFld.class ? frmFld.class : 'col-md-12'"
+        class="mb-2"
+      >
+        <div
+          *ngIf="
+            !frmFld.isSelect &&
+            !frmFld.isCheckbox &&
+            !frmFld.isRadio &&
+            !frmFld.isTextarea &&
+            !frmFld.isToggle &&
+            !frmFld.isNumber &&
+            !frmFld.isUpload
+          "
+        >
+          <div class="form-group mb-0">
+            <label
+              [for]="frmFld.name"
+              [class.required]="isRequired(frmFld.name)"
+              >{{ frmFld.label }}</label
+            >
+            <input
+              type="text"
+              [formControlName]="frmFld.name"
+              [name]="frmFld.name"
+              class="form-control"
+              [maxlength]="frmFld.noMaxLimit ? '' : 255"
+              [ngClass]="{ 'is-invalid': getFormFieldErrors(frmFld.name) }"
+            />
+          </div>
+        </div>
+
+        <div *ngIf="frmFld.isTextarea">
+          <div class="form-group mb-0">
+            <label
+              [for]="frmFld.name"
+              [class.required]="isRequired(frmFld.name)"
+              >{{ frmFld.label }}</label
+            >
+            <textarea
+              type="text"
+              [formControlName]="frmFld.name"
+              [name]="frmFld.name"
+              class="form-control"
+              [maxlength]="frmFld.noMaxLimit ? '' : 1000"
+              [ngClass]="{ 'is-invalid': getFormFieldErrors(frmFld.name) }"
+            ></textarea>
+          </div>
+        </div>
+
+        <div *ngIf="frmFld.isNumber">
+          <div class="form-group mb-0">
+            <label
+              [for]="frmFld.name"
+              [class.required]="isRequired(frmFld.name)"
+              >{{ frmFld.label }}</label
+            >
+            <input
+              type="number"
+              [formControlName]="frmFld.name"
+              [name]="frmFld.name"
+              class="form-control number"
+              [min]="frmFld?.min || 0"
+              [max]="frmFld?.max || 99999999"
+              [id]="frmFld.name"
+              appNumericInput
+              [minLimit]="frmFld?.min || 0"
+              [maxLimit]="frmFld?.max || 99999999"
+              [ngClass]="{ 'is-invalid': getFormFieldErrors(frmFld.name) }"
+            />
+          </div>
+        </div>
+
+        <div *ngIf="frmFld.isUpload">
+          <div class="form-group mb-0">
+            <label
+              [for]="frmFld.name"
+              [class.required]="isRequired(frmFld.name)"
+              >{{ frmFld.label }}</label
+            >
+            <app-upload-file
+              (onFileUpload)="onFileUpload($event, frmFld.name)"
+            ></app-upload-file>
+          </div>
+        </div>
+
+        <div *ngIf="frmFld.isSelect">
+          <div class="form-group mb-0">
+            <label
+              [for]="frmFld.name"
+              [class.required]="isRequired(frmFld.name)"
+              >{{ frmFld.label }}</label
+            >
+            <div [ngClass]="{ 'input-group': !!frmFld.fieldAddOn }">
+              <div
+                *ngIf="!!frmFld.fieldAddOn"
+                (click)="frmFld.fieldAddOn.open = !frmFld.fieldAddOn.open"
+                class="input-group-prepend select2-input-group-prepend"
+              >
+                <span class="input-group-text" id="basic-addon1">
+                  <i class="uil-plus"></i>
+                </span>
+              </div>
+              <span
+                [ngClass]="{ 'select2-input-group': !!frmFld.fieldAddOn }"
+                *ngIf="(dropdownData$ | async)[frmFld.name] as data"
+              >
+                <select2
+                  appSelect2MarkAsTouched
+                  [data]="data"
+                  [value]="frmFld.value"
+                  [formControlName]="frmFld.name"
+                  name="frmFld.name"
+                  [multiple]="frmFld.multiSelect"
+                  (update)="onValueChange($event, frmFld.name)"
+                  [ngClass]="{ 'is-invalid': getFormFieldErrors(frmFld.name) }"
+                  [listPosition]="'below'"
+                  [hideSelectedItems]="true"
+                  [resultMaxHeight]="'198px'"
+                >
+                </select2>
+              </span>
+            </div>
+
+            <div *ngIf="!!frmFld.fieldAddOn && frmFld.fieldAddOn.open">
+              <div class="page-title-box">
+                <h4 class="page-title component-header">
+                  {{ frmFld.fieldAddOn.label }}
+                </h4>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label
+                      [for]="frmFld.name + 'name'"
+                      [class.required]="isRequired(frmFld.name)"
+                      >Name</label
+                    >
+                    <input
+                      type="text"
+                      [name]="frmFld.name + 'name'"
+                      [(ngModel)]="frmFld.fieldAddOn.formValue.name"
+                      class="form-control"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label
+                      [for]="frmFld.name + 'description'"
+                      [class.required]="isRequired(frmFld.name)"
+                      >Description</label
+                    >
+                    <textarea
+                      type="text"
+                      [name]="frmFld.name + 'description'"
+                      [(ngModel)]="frmFld.fieldAddOn.formValue.description"
+                      class="form-control"
+                      [ngModelOptions]="{ standalone: true }"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12" style="margin-top: 20px">
+                  <div class="btn-group float-right">
+                    <button
+                      class="btn btn-light mr-2"
+                      (click)="closeFieldAddOn(frmFld)"
+                      style="min-width: 80px"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      (click)="saveFieldAddOn(frmFld)"
+                      style="min-width: 80px"
+                    >
+                      Guardar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="frmFld.isRadio">
+          <label
+            [for]="frmFld.name"
+            [class.required]="isRequired(frmFld.name)"
+            >{{ frmFld.label }}</label
+          >
+          <div class="mt-2">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input
+                type="radio"
+                id="radio1"
+                [name]="frmFld.name"
+                [formControlName]="frmFld.name"
+                [value]="frmFld.radio1"
+                class="custom-control-input"
+              />
+              <label class="custom-control-label" for="radio1">{{
+                frmFld.radio1
+              }}</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input
+                type="radio"
+                id="radio2"
+                [name]="frmFld.name"
+                [formControlName]="frmFld.name"
+                [value]="frmFld.radio2"
+                class="custom-control-input"
+              />
+              <label class="custom-control-label" for="radio2">{{
+                frmFld.radio2
+              }}</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-2" *ngIf="frmFld.isCheckbox">
+          <div class="form-group mb-0">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                [id]="frmFld.name"
+                [name]="frmFld.name"
+              />
+              <label class="custom-control-label" [for]="frmFld.name">{{
+                frmFld.label
+              }}</label>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="frmFld.isToggle">
+          <label
+            [for]="frmFld.name"
+            [class.required]="isRequired(frmFld.name)"
+            >{{ frmFld.label }}</label
+          >
+          <div class="form-group mb-0">
+            <input
+              type="checkbox"
+              [formControlName]="frmFld.name"
+              [id]="frmFld.name"
+              [attr.data-switch]="'info'"
+              [value]="frmFld.value"
+            />
+            <label
+              [for]="frmFld.name"
+              [attr.data-off-label]="frmFld.toggleOff"
+              [attr.data-on-label]="frmFld.toggleOn"
+            ></label>
+          </div>
+        </div>
+        <div
+          class="invalid-feedback"
+          [ngStyle]="{
+            display: getFormFieldErrors(frmFld.name) ? 'block' : 'none'
+          }"
+        >
+          {{ getFormFieldFeedback(frmFld.name) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div [ngClass]="{ 'fixed-bottom': fixedButton }" class="py-2 mr-1">
+    <div class="row">
+      <div class="col-md-12" style="margin-top: 20px">
+        <div class="btn-group float-right">
+          <button
+            [disabled]="loader.status | async"
+            class="btn btn-light mr-2"
+            (click)="cancelForm()"
+            style="min-width: 80px"
+          >
+            Cancelar
+          </button>
+          <button
+            [disabled]="formObject.invalid || (loader.status | async)"
+            type="submit"
+            class="btn btn-primary"
+            (click)="submitForm()"
+            style="min-width: 80px"
+          >
+            <span
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+              [hidden]="!(loader.status | async)"
+            ></span>
+            <span [hidden]="loader.status | async">{{ buttonText }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

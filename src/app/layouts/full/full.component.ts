@@ -2,7 +2,6 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-//declare var $: any;
 
 @Component({
   selector: 'app-full-layout',
@@ -10,7 +9,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
   styleUrls: ['./full.component.scss']
 })
 export class FullComponent implements OnInit {
-
+  year: number;
 	public config: PerfectScrollbarConfigInterface = {};
 
   	constructor(public router: Router) {}
@@ -26,6 +25,7 @@ export class FullComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.year = new Date().getFullYear();
     if (this.router.url === '/') {
       this.router.navigate(['/starter']);
     }

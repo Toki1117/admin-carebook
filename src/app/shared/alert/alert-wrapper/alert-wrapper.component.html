@@ -1,0 +1,16 @@
+<ngb-alert
+  [dismissible]="true"
+  [@fadeAnimation]="{
+    value: animationState,
+    params: {
+      fadeIn: toastConfig.animation.fadeIn,
+      fadeOut: toastConfig.animation.fadeOut
+    }
+  }"
+  (@fadeAnimation.done)="onFadeFinished($event)"
+  [type]="data.type"
+  (close)="close()"
+>
+  <i *ngIf="iconType" class="mr-2" [ngClass]="iconType"></i>
+  {{ data.text }}
+</ngb-alert>

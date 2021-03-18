@@ -1,0 +1,28 @@
+.display-none {
+  visibility: hidden;
+}
+
+.select2-input-group {
+  position: absolute;
+  width: 100%;
+}
+
+.select2-input-group-prepend {
+  z-index: 999;
+}
+
+.show-none {
+  display: none;
+}
+
+.form-control.number {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+}

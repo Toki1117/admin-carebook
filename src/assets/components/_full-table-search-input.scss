@@ -1,0 +1,22 @@
+.input-group {
+  .form-control {
+    border: none;
+    height: 38px;
+    padding-left: 40px;
+    padding-right: 20px;
+    box-shadow: none;
+    border: 1px solid #dee2e6;
+  }
+  span {
+    position: absolute;
+    z-index: 9;
+    font-size: 20px;
+    line-height: 38px;
+    left: 10px;
+    top: 0;
+  }
+  .input-group-append {
+    margin-left: 0;
+    z-index: 4;
+  }
+}

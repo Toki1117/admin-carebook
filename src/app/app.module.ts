@@ -2,14 +2,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  CommonModule,
-  LocationStrategy,
-  PathLocationStrategy
+	CommonModule,
+	LocationStrategy,
+	PathLocationStrategy,
 } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Routes, RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -19,7 +19,6 @@ import { NavigationComponent } from './shared/header-navigation/navigation.compo
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 
-
 import { Approutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
@@ -27,43 +26,52 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { CoreModule } from './core/core.module';
+import { ToastModule } from './shared/toast/toast/toast.module';
+import { AvatarImageModule } from './shared/avatar-image/avatar-image.module';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true,
-  wheelSpeed: 1,
-  wheelPropagation: true,
-  minScrollbarLength: 20
-};   
+	suppressScrollX: true,
+	wheelSpeed: 1,
+	wheelPropagation: true,
+	minScrollbarLength: 20,
+};
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SpinnerComponent,
-    FullComponent,
-    NavigationComponent,
-    SidebarComponent,
-    BreadcrumbComponent
-  ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    HttpClientModule,
-	PerfectScrollbarModule,
-    NgbModule,
-    RouterModule.forRoot(Approutes, { useHash: false, relativeLinkResolution: 'legacy' })
-  ],
-  providers: [
-    {
-      provide: LocationStrategy,
-      useClass: PathLocationStrategy
-    },
-	{
-      provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
-  ],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		SpinnerComponent,
+		FullComponent,
+		NavigationComponent,
+		SidebarComponent,
+		BreadcrumbComponent,
+	],
+	imports: [
+		CommonModule,
+		BrowserModule,
+		BrowserAnimationsModule,
+		FormsModule,
+		HttpClientModule,
+		PerfectScrollbarModule,
+		NgbModule,
+		CoreModule,
+		ToastModule,
+		AvatarImageModule,
+		RouterModule.forRoot(Approutes, {
+			useHash: false,
+			relativeLinkResolution: 'legacy',
+		}),
+	],
+	providers: [
+		{
+			provide: LocationStrategy,
+			useClass: PathLocationStrategy,
+		},
+		{
+			provide: PERFECT_SCROLLBAR_CONFIG,
+			useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+		},
+	],
+	bootstrap: [AppComponent],
 })
 export class AppModule {}

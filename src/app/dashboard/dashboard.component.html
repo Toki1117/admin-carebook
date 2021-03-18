@@ -1,29 +1,26 @@
-<div class="row">
-
-  <div class="col-md-9">
-    <app-sales-graph></app-sales-graph>
+<div class="bg-dashboard">
+  <h1 class="m-auto text-center">
+    {{ greeting }} &nbsp;
+    <small *ngIf="user$ | async as user"> {{ user.email }} </small>
+  </h1>
+  <div
+    class="d-flex flex-column justify-content-center align-items-center h-100"
+  >
+    <div class="dashboard-cards">
+      <ng-container *ngFor="let item of routes; let even = even; let odd = odd">
+        <div
+          [ngClass]="{ 'indigo-glass': even, 'blue-glass': odd }"
+          class="frame"
+          (click)="navigateTo(item.path)"
+        >
+          <div
+            class="d-flex align-items-center justify-content-center cricle-outline m-2 p-4"
+          >
+            <i style="color: white" class="{{ item.icon }} mdi-48px"></i>
+          </div>
+          <h4>{{ item.title }}</h4>
+        </div>
+      </ng-container>
+    </div>
   </div>
-  <div class="col-md-3">
-    <app-visit-graph></app-visit-graph>
-  </div>
-
-
-
-  <div class="col-md-6">
-    <app-project-of-month></app-project-of-month>
-  </div>
-  <div class="col-md-6">
-    <app-contacts></app-contacts>
-  </div>
-
-
-  <div class="col-md-4">
-    <app-cards></app-cards>
-  </div>
-
-  <div class="col-md-8">
-    <app-website-graph></app-website-graph>
-  </div>
-
-
 </div>

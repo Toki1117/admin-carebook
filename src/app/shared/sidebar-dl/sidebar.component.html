@@ -1,0 +1,41 @@
+<!-- Right Sidebar -->
+<div *ngIf="isShowing">
+  <div
+    class="right-bar"
+    (clickOutside)="hide()"
+    [exclude]="
+      '.right-bar-toggle, .right-bar, .rightbar-content, .sidebar-content'
+    "
+    [excludeBeforeClick]="true"
+    [delayClickOutsideInit]="true"
+    [ngStyle]="{ 'max-width': isShowing ? sidebarWidth : '0', width: '100%' }"
+  >
+    <div *ngIf="isShowing">
+      <div class="side-title border-bottom mx-2">
+        <a
+          href="javascript:void(0);"
+          class="close-icon float-right"
+          (click)="hide()"
+        >
+          <i class="uil-multiply"></i>
+        </a>
+        <h5 class="m-0">{{ title }}</h5>
+      </div>
+
+      <div class="rightbar-content overflow-auto" id="right-bar-c">
+        <div class="p-3" *ngIf="warningTitle">
+          <div class="alert alert-warning" role="alert">
+            <strong>{{ warningTitle }} </strong> {{ warningText }}
+          </div>
+        </div>
+
+        <div class="p-3" style="width: 100%">
+          <ng-content class="sidebar-content"> </ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="rightbar-overlay"></div>
+<!-- /Right-bar -->
