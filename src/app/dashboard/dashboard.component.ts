@@ -21,7 +21,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
     this.greets = {
       day: 'Buenos días',
       noon: 'Buenas tardes',
-      night: 'Buenas noche',
+      night: 'Buenas noches',
     };
   }
 
